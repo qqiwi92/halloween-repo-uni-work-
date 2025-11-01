@@ -8,13 +8,12 @@ void destroy(int **mtx, size_t created) {
   delete[] mtx;
 }
 
-int ** constuction( int ** mtx, int init, size_t rows, size_t columns) {
-    for (size_t i =0;i < rows;++i){
-        for (size_t j =0 ; j < columns; ++j) {
-            mtx[i][j] = init;
-        }
+void constuction(int **mtx, int init, size_t rows, size_t columns) {
+  for (size_t i = 0; i < rows; ++i) {
+    for (size_t j = 0; j < columns; ++j) {
+      mtx[i][j] = init;
     }
-    return mtx; 
+  }
 }
 
 int **create(size_t rows, size_t columns) {
@@ -30,14 +29,34 @@ int **create(size_t rows, size_t columns) {
   }
   return mtx;
 }
+void input(int **mtx, size_t rows, size_t columns) {
+  for (size_t i = 0; i < rows; i++) {
+    for (size_t j = 0; j < columns; j++) {
+      std::cin >> mtx[i][j];
+    }
+  }
+}
+void output(int **mtx, size_t rows, size_t columns) {
+  for (size_t i = 0; i < rows; i++) {
+    for (size_t j = 0; j < columns; j++) {
+      std::cout << ((j == 0) ? "" : "-") << mtx[i][j];
+    }
+    std::cout << "\n";
+  }
+}
 int main() {
   int **matrix = nullptr;
+  size_t r = 0, c = 0;
+  std::cin >> r >> c;
   try {
-    matrix = create(5, 6);
-    matrix = constuction(matrix,1,5, 6);
+    matrix = create(r, c);
+    input(matrix, r, c);
+    if (!std::cin) {
+      return 1;
+    }
+    output(matrix, r, c);
+    destroy(matrix, r * c);
   } catch (const std::bad_alloc &e) {
     std::cout << e.what() << std::endl;
   }
 }
-
-
